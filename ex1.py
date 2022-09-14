@@ -175,10 +175,13 @@ class ListRand:
         """
         f = open(str(file)+".txt", "r")
         rand = {}
+        rand1 = {}
         for line in f:
             elems = line.split(',')
             rand[int(elems[0])] = (ListNode(data=elems[1]), elems[2])
+            rand1[int(elems[0])] = (elems[1], elems[2])
         f.close()
+        print(rand1)
         self._count = len(rand)
         if len(rand) == 1:
             self._head = rand[0][0]
@@ -199,10 +202,10 @@ class ListRand:
             while tmp_count < self._count / 2:
                 tmp1.next = rand[tmp_count][0]
                 if rand[tmp_count][1]:
-                    tmp1.rand = rand[int(rand[tmp_count][1])][0]
+                    tmp1.next.rand = rand[int(rand[tmp_count][1])][0]
                 tmp2.prev = rand[self._count-tmp_count-1][0]
                 if rand[self._count-tmp_count-1][1]:
-                    tmp2.rand = rand[int(rand[tmp_count][1])][0]
+                    tmp2.prev.rand = rand[int(rand[self._count-tmp_count-1][1])][0]
                 tmp1.next.prev = tmp1
                 tmp2.prev.next = tmp2
                 tmp1 = tmp1.next
@@ -221,15 +224,16 @@ class ListRand:
 
 
 L = ListRand()
-# L.add_t(2)
-# L.add_t(5)
-# L.add_t(3)
-# L.add_t(1)
-# L.add_t(7)
-# L.add_t(6)
+L.add_t(2)
+L.add_t(5)
+L.add_t(3)
+L.add_t(1)
+L.add_t(7)
+L.add_t(6)
 
 print(L)
-# L.get_elem_by_index(0).rand = L.get_elem_by_index(0)
+L.get_elem_by_index(3).rand = L.get_elem_by_index(0)
+L.get_elem_by_index(2).rand = L.get_elem_by_index(3)
 L.serialize('data1')
 A = ListRand()
 A.deserialize('data1')
